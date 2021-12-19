@@ -18,3 +18,14 @@ export const getRepositories = () => async (dispatch: AppDispatch, getState: () 
 export const setUser = (username: string) => (dispatch: AppDispatch) => {
   dispatch({ type: userActions.SET_USER, payload: username });
 };
+
+export const setStarredRepos = (payload: number[]) => ({ type: userActions.SET_STARRED_REPOS, payload });
+
+export const starRepo = (id: number) => (dispatch: AppDispatch, getState: () => RootState) => {
+  const { starredRepos } = getState().user;
+  const isStarred = starredRepos.some((repoId) => repoId === id);
+  const newStarredRepos = isStarred
+    ? starredRepos.filter((repoId) => repoId !== id)
+    : [...starredRepos, id];
+  dispatch(setStarredRepos(newStarredRepos));
+};

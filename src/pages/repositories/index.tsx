@@ -29,13 +29,23 @@ const Repositories = (): JSX.Element => {
 
   return (
     <div className="flex items-center justify-center h-full">
-      <div className="w-full text-blue-900 font-bold p-10">
+      <div className="w-full text-blue-900 font-bold px-10 py-5">
         {repos.map((repo, index) => {
-          const { name, language, updated_at, stargazers_count, issues_url, pulls_url } = repo;
-          const repoInfo = { name, language, updated_at, stargazers_count, issues_url, pulls_url };
+          const { name, language, updated_at, stargazers_count, owner, html_url, description, id } =
+            repo;
+          const repoInfo = {
+            name,
+            language,
+            updated_at,
+            stargazers_count,
+            owner,
+            html_url,
+            description,
+            id,
+          };
           return (
             <RepoItem
-              key={repo.id}
+              key={id}
               repo={{ name, language, updated_at, stargazers_count }}
               index={index}
               handleRepoClick={() => handleRepoClick(repoInfo)}

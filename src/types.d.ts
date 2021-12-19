@@ -3,11 +3,21 @@ export interface Repo {
   language: string;
   updated_at: string;
   stargazers_count: number;
+}
 
+export interface RepoOwner {
+  login: string;
+  id: number;
+  avatar_url: string;
+  html_url: string;
 }
 
 export interface RepoInfo extends Repo {
-  issues_url: string;
-  pulls_url: string;
+  issues?: any[];
+  pulls?: any[];
   contributors?: any[];
+  owner: RepoOwner | null;
+  html_url: string;
+  description: string;
+  id: number;
 }
