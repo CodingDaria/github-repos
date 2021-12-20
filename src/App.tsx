@@ -1,17 +1,12 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-// import { useSelector } from 'react-redux';
-// import { RootState } from './store/reducers';
+
 import Layout from './components/Layout';
 import Repositories from './pages/repositories/index';
 import UserSearch from './components/UserSearch';
 import RepoInfo from './pages/repo';
 
 function App(): JSX.Element {
-  // const { username } = useSelector((state: RootState) => ({
-  //   username: state.user.username,
-  // }));
-
   return (
     <Layout>
       <Switch>

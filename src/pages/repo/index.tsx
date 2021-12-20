@@ -22,7 +22,7 @@ const RepoInfo = (): JSX.Element => {
   }));
 
   const isRepoStarred = useMemo(() => {
-    return starredRepos.some((repoId) => repoId === repo.id);
+    return starredRepos.some(({ id }) => id === repo.id);
   }, [repo.id, starredRepos]);
 
   useEffect(() => {

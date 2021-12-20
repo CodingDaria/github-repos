@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { setUser, setStarredRepos } from '../store/reducers/user/user.actions';
+import { setUser, setStarredRepos, setRepos } from '../store/reducers/user/user.actions';
 
 const UserSearch = (): JSX.Element => {
   const history = useHistory();
@@ -26,6 +26,7 @@ const UserSearch = (): JSX.Element => {
           onClick={() => {
             dispatch(setUser(username));
             dispatch(setStarredRepos([]));
+            dispatch(setRepos([]));
             history.push('/repos');
           }}
         >

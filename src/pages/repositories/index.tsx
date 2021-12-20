@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -14,13 +14,22 @@ const Repositories = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { repos } = useSelector((state: RootState) => ({
+  const { repos, starredRepos, isOnlyFavorites } = useSelector((state: RootState) => ({
     repos: state.user.repos,
+    starredRepos: state.user.starredRepos,
+    isOnlyFavorites: state.user.isOnlyFavorites,
   }));
+
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [repoList, setRepoList] = useState<any[]>([]);
 
   useEffect(() => {
     dispatch(getRepositories());
   }, [dispatch]);
+
+  useEffect(() => {
+    setRepoList(isOnlyFavorites ? starredRepos : repos);
+  }, [isOnlyFavorites, repos]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleRepoClick = (repo: RepoType) => {
     dispatch(setRepo(repo));
@@ -30,7 +39,7 @@ const Repositories = (): JSX.Element => {
   return (
     <div className="flex items-center justify-center h-full">
       <div className="w-full text-blue-900 font-bold px-10 py-5">
-        {repos.map((repo, index) => {
+        {repoList.map((repo, index) => {
           const { name, language, updated_at, stargazers_count, owner, html_url, description, id } =
             repo;
           const repoInfo = {

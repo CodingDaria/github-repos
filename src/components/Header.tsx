@@ -1,8 +1,9 @@
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from '../store/reducers';
+import { setFavorites } from '../store/reducers/user/user.actions';
 
 interface LinkProps {
   path: string;
@@ -20,15 +21,17 @@ const StyledLink: React.FC<LinkProps> = ({ path, title }): JSX.Element => (
 
 const Header = (): JSX.Element => {
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
 
-  const { username } = useSelector((state: RootState) => ({
+  const { username, isOnlyFavorites } = useSelector((state: RootState) => ({
     username: state.user.username,
+    isOnlyFavorites: state.user.isOnlyFavorites,
   }));
 
   const isRepoPage = pathname === '/repos';
 
-  const handleFavourites = () => {
-    return;
+  const handleFavorites = () => {
+    dispatch(setFavorites(!isOnlyFavorites));
   };
 
   return (
@@ -39,10 +42,12 @@ const Header = (): JSX.Element => {
         <div className="flex">
           <button
             type="button"
-            className="mr-2 text-blue-900 hover:bg-blue-200 px-4 py-2 border rounded border-blue-900"
-            onClick={handleFavourites}
+            className={`mr-2 px-4 py-2 border rounded border-blue-900 ${
+              isOnlyFavorites ? 'text-white bg-blue-900' : 'text-blue-900 hover:bg-blue-200'
+            }`}
+            onClick={handleFavorites}
           >
-            Favourites
+            Favorites
           </button>
           <StyledLink path="/usersearch" title="Search" />
         </div>
